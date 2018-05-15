@@ -146,6 +146,157 @@
 						<p class="fragment">¿Lo serán las FDTs?</p>
 					</section>
 				</section>
+				<section data-background-color="lightblue">
+					<section>
+						<h2>Comparativa de las FDTs</h2>
+						<img src="http://drive.google.com/uc?export=view&id=1sX74e_sG6CmLbmYjBU5cRLvosuf0aHh7" width="400" height="300" alt="Google Logo">
+					</section>
+					<section>
+						<h3>Composición de la aleación de aluminio</h3>
+						<img src="http://drive.google.com/uc?export=view&id=1_lR3o9T18j2epQbysn9jAhSyzBDOIVVZ" width="600" height="400" alt="Google Logo">
+					</section>
+					<section>
+						<h3>Efecto de la aleación en los espectros</h3>
+						<iframe class="highcharts-iframe" src="https://cloud.highcharts.com/embed/r1TyThL0M/" style="border: 1; width: 100%; height: 350px"></iframe>
+						<p class="fragment">De manera teórica ya vemos que hay una incertidumbre asociada a la composición de la aleación</p>
+					</section>
+					<section>
+						<h3>Comparativa entre espectros</h3>
+						<div>
+							<table>
+							  <thead>
+							    <tr style="text-align: right;">
+							      <th>Material</th>
+							      <th>Energía</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr>
+							      <td>PMMA</td>
+							      <td>52.323</td>
+							    </tr>
+							    <tr>
+							      <td>Al puro</td>
+							      <td>51.802</td>
+							    </tr>
+							    <tr>
+							      <td>Al5083 max</td>
+							      <td>53.802</td>
+							    </tr>
+							    <tr>
+							      <td>Al5083 min</td>
+							      <td>52.140</td>
+							    </tr>
+							  </tbody>
+							</table>
+						</div>
+					</section>
+					<section>
+						<h3>Índice de Exposición</h3>
+						<img src="http://drive.google.com/uc?export=view&id=1R1q3jdbdEBJKoBlMFmEP8i6kCy90vuio" width="350" height="450" alt="Google Logo">
+						<p class="fragment">Usamos este indicador ya que se obtiene de la imagen bruta</p>
+					</section>
+					<section>
+							<h3>Carga de los datos</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+								import numpy as np
+								from scipy import stats, signal
+								import pandas as pd
+
+								TablaPMMA = pd.read_csv('TablaPMMA.csv')[[
+								    'IndiceExposicion', 'Dosis(uGy)', 'HVL'
+								]]
+
+								TablaAl = pd.read_csv('TablaAl.csv')[[
+								    'IndiceExposicion', 'Dosis(uGy)', 'HVL']]
+								</code></pre>
+  								<img src="http://drive.google.com/uc?export=view&id=12_QSuu3pXOWgkS4pk1cthyFdICj-iADP" width="250" height="250" alt="Google Logo">
+									<img src="http://drive.google.com/uc?export=view&id=1P0uGnVFmVjlyYN8jWHqOoquA5lCSVQ54" width="250" height="250" alt="Google Logo">
+					</section>
+					<section>
+								<h3>Ajuste lineal</h3>
+								<pre><code class="hljs" data-trim contenteditable>
+									PMMA80 = stats.linregress(
+											np.log(TablaPMMA['IndiceExposicion'].get_values()),
+											np.log(TablaPMMA['Dosis(uGy)'].get_values()))
+									Al80 = stats.linregress(
+											np.log(TablaAl['IndiceExposicion'].get_values()),
+											np.log(TablaAl['Dosis(uGy)'].get_values()))
+							  </code></pre>
+								<p class="fragment">Ya tenemos el ajuste de las rectas de ambos materiales</p>
+								<p class="fragment">Le hemos quitado la dependencia logarítmica</p>
+					</section>
+					<section>
+						<h3>Gráfica comparativa con el PMMA</h3>
+						<iframe class="highcharts-iframe" src="https://cloud.highcharts.com/embed/Hk9VCPx0f/" style="border: 0; width: 100%; height: 350px"></iframe>
+						<p class="fragment">No obstante, encontremos la función que transforma una gráfica en la otra</p>
+					</section>
+					<section>
+						<h3>Kernel de convolución</h3>
+						<div>
+							\[
+							 \begin{aligned}
+ 							 f_{PMMA} =  k * f_{Al}\end{aligned} \\
+							\]
+						</div>
+					</section>
+					<section>
+							<h3>Función de conversión</h3>
+								<pre><code class="hljs" data-trim contenteditable>
+									X = np.log(np.arange(180, 270))
+
+									pPMMA = np.poly1d([PMMA80.slope, PMMA80.intercept])
+									pAl = np.poly1d([Al80.slope, Al80.intercept])
+
+									PMMAfunction = np.polyval(pPMMA, X)
+									Alfunction = np.polyval(pAl, X)
+
+									Al_to_PMMA = np.polydiv(pPMMA, pAl)
+							</code></pre>
+							<p>Las funciones polymul y polydiv corresponden en el caso de polinomios, a convolución y deconvolución, respectivamente</p>
+					</section>
+					<section>
+						<h3>datos numéricos</h3>
+						<div>
+							\[
+							 \begin{aligned}
+							 f\left(x\right) =  mx+b\end{aligned} \\
+							\]
+						</div>
+						<div>
+							<table>
+								<thead>
+									<tr style="text-align: right;">
+										<th>función</th>
+										<th>m</th>
+										<th>b</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>PMMA</td>
+										<td>5.481</td>
+										<td>-27.488</td>
+									</tr>
+									<tr>
+										<td>Al5083</td>
+										<td>5.365</td>
+										<td>-26.862</td>
+									</tr>
+									<tr>
+										<td>kernel</td>
+										<td>1.022</td>
+										<td>-0.047</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</section>
+					<section>
+						<h3>Cuestiónes</h3>
+						<p>¿Qué hacemos con todo esto?</p>
+					</section>
+				</section>
 			</div>
 		</div>
 
