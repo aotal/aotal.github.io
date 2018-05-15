@@ -131,8 +131,18 @@
 					<section>
 						<h3>Comparativa entre espectros</h3>
 						<!-- Gráfica de los espectros teóricos-->
-						<iframe class="highcharts-iframe" src="https://cloud.highcharts.com/embed/S1sfoCRaf/" style="frameborder: 1; width: 100%; height: 350px"> </iframe>
-						<p class="fragment">Parece que los espectros de aluminio y PMMA son equivalentes</p>
+						<iframe class="highcharts-iframe" src="https://cloud.highcharts.com/embed/Byx6dxv0f/" style="border: 1; width: 100%; height: 350px"></iframe>
+					</section>
+					<section>
+						<h3>Comparativa entre espectros</h3>
+						<div>
+							\[  \begin{aligned}
+							 E_T =  \sum_{i=1}^n N_i E_i \end{aligned} \\
+							 E_{Al} = 51.80\frac{keV}{electrón} \  \ E_{PMMA} = 52.32\frac{keV}{electrón} \\
+							 E_{PMMA}=1.01 \cdot E_{Al}
+							\]
+						</div>
+						<p class="fragment">Parece que el comportamiento teórico del aluminio y PMMA son equivalentes</p>
 						<p class="fragment">¿Lo serán las FDTs?</p>
 					</section>
 				</section>
@@ -147,11 +157,17 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+
+				math: {
+					//mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full'
+				},
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); }},
+					{ src: 'plugin/math/math.js', async: true }
 				]
 			});
 		</script>

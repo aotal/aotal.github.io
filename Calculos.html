@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CAE</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-color="lightblue">
+					<section>
+						<h2>Comparativa de las FDTs</h2>
+						<img src="http://drive.google.com/uc?export=view&id=1sX74e_sG6CmLbmYjBU5cRLvosuf0aHh7" width="400" height="300" alt="Google Logo">
+					</section>
+					<section>
+						<h3>Composición de la aleación de aluminio</h3>
+						<img src="http://drive.google.com/uc?export=view&id=1_lR3o9T18j2epQbysn9jAhSyzBDOIVVZ" width="600" height="400" alt="Google Logo">
+					</section>
+					<section>
+						<h3>Comparativa con la aleación</h3>
+						<iframe class="highcharts-iframe" src="https://cloud.highcharts.com/embed/r1TyThL0M/" style="border: 1; width: 100%; height: 350px"></iframe>
+						<p class="fragment">De manera teórica ya vemos que hay una incertidumbre asociada a la composición de la aleación</p>
+					</section>
+					<section>
+						<h3>Comparativa entre espectros</h3>
+						<div>
+							<table border="1" class="dataframe">
+							  <thead>
+							    <tr style="text-align: right;">
+							      <th>Material</th>
+							      <th>Energía</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr>
+							      <td>PMMA</td>
+							      <td>52.323</td>
+							    </tr>
+							    <tr>
+							      <td>Al puro</td>
+							      <td>51.802</td>
+							    </tr>
+							    <tr>
+							      <td>Al5083 max</td>
+							      <td>53.802</td>
+							    </tr>
+							    <tr>
+							      <td>Al5083 min</td>
+							      <td>52.140</td>
+							    </tr>
+							  </tbody>
+							</table>
+						</div>
+					</section>
+					<section>
+						<table border="1" class="dataframe">
+						  <thead>
+						    <tr style="text-align: right;">
+						      <th>IndiceExposicion</th>
+						      <th>\[Dosis( \mu Gy)\]</th>
+						      <th>HVL</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>186</td>
+						      <td>3.543</td>
+						      <td>6.56</td>
+						    </tr>
+						    <tr>
+						      <td>184</td>
+						      <td>2.690</td>
+						      <td>7.56</td>
+						    </tr>
+						    <tr>
+						      <td>193</td>
+						      <td>4.011</td>
+						      <td>6.60</td>
+						    </tr>
+						    <tr>
+						      <td>197</td>
+						      <td>4.495</td>
+						      <td>6.64</td>
+						    </tr>
+						    <tr>
+						      <td>213</td>
+						      <td>6.275</td>
+						      <td>6.60</td>
+						    </tr>
+						    <tr>
+						      <td>228</td>
+						      <td>8.951</td>
+						      <td>7.10</td>
+						    </tr>
+						    <tr>
+						      <td>252</td>
+						      <td>17.870</td>
+						      <td>7.51</td>
+						    </tr>
+						  </tbody>
+						</table>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+
+				math: {
+					//mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full'
+				},
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); }},
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
